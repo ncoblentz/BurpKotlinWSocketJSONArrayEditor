@@ -70,6 +70,8 @@ class WSocketJSONArrayMessageEditor(private val api : MontoyaApi, private val cr
                 startsWithA=true
                 payload=payload.substring(1)
             }
+            else
+                startsWithA=false
             val jsonArrayInput = JSONArray(payload)
             val jsonArrayOutput = JSONArray()
             for (i in 0 until jsonArrayInput.length()) {
