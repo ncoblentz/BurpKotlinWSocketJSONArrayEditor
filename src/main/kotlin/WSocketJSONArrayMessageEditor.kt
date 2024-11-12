@@ -4,6 +4,7 @@ import burp.api.montoya.core.ByteArray
 import burp.api.montoya.ui.Selection
 import burp.api.montoya.ui.contextmenu.WebSocketMessage
 import burp.api.montoya.ui.editor.EditorOptions
+import burp.api.montoya.ui.editor.RawEditor
 import burp.api.montoya.ui.editor.extension.ExtensionProvidedWebSocketMessageEditor;
 import burp.api.montoya.ui.editor.extension.EditorCreationContext
 import com.nickcoblentz.montoya.LogLevel
@@ -19,15 +20,18 @@ import kotlin.jvm.optionals.getOrNull
 class WSocketJSONArrayMessageEditor(private val api : MontoyaApi, private val creationContext : EditorCreationContext) : ExtensionProvidedWebSocketMessageEditor {
     private val logger = MontoyaLogger(api, LogLevel.DEBUG)
     private var originalMessage : WebSocketMessage? = null
-    private lateinit var editor : WebSocketMessageEditor
+    //private lateinit var editor : WebSocketMessageEditor
+    private lateinit var editor : RawEditor
     private var startsWithA=false
 
     init {
         logger.debugLog("got here")
         editor = if(creationContext.editorMode()==EditorMode.READ_ONLY)
-            api.userInterface().createWebSocketMessageEditor(EditorOptions.READ_ONLY)
+            //api.userInterface().createWebSocketMessageEditor(EditorOptions.READ_ONLY)
+            api.userInterface().createRawEditor(EditorOptions.READ_ONLY,EditorOptions.WRAP_LINES)
         else
-            api.userInterface().createWebSocketMessageEditor()
+            //api.userInterface().createWebSocketMessageEditor()
+            api.userInterface().createRawEditor(EditorOptions.WRAP_LINES)
         logger.debugLog("reached end")
     }
 
